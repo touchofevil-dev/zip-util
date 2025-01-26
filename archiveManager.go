@@ -46,8 +46,10 @@ func unzip(source, destination string) {
 	}
 	defer reader.Close()
 
+	os.MkdirAll(destination, os.ModeDir)
+
 	for _, file := range reader.File {
-		fileToWrite, _ := os.Create(destination + file.Name)
+		fileToWrite, _ := os.Create(filepath.Join(destination, file.Name))
 		defer fileToWrite.Close()
 
 		fileToRead, _ := file.Open()
